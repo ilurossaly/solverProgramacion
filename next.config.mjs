@@ -5,8 +5,8 @@ const isProd = process.env.GITHUB_ACTIONS === 'true';
 const nextConfig = {
   output: 'export',           
   images: { unoptimized: true },
-  basePath: isProd ? '/programacionLineal' : '',
-  assetPrefix: isProd ? '/programacionLineal/' : '',
+  basePath: isProd ? '/solverProgramacion' : '',
+  assetPrefix: isProd ? '/solverProgramacion/' : '',
   trailingSlash: true         
 };
 
