@@ -12,10 +12,24 @@ import { GraphicalSolver } from "@/lib/graphical-solver"
 import { SensitivityAnalyzer } from "@/lib/sensitivity-analyzer"
 import { InterpretationService } from "@/lib/interpretation-service"
 
+// === Tipos inline (sin archivo externo) ===
+type ResultsState =
+  | {
+      simplex: any
+      graphical: any
+      sensitivity: any
+      interpretation: any
+      report: any
+      reportText?: string
+      parsedProblem?: any
+      error?: string
+    }
+  | null
+
 export default function LinearProgrammingApp() {
-  const [problem, setProblem] = useState("")
-  const [results, setResults] = useState(null)
-  const [isProcessing, setIsProcessing] = useState(false)
+  const [problem, setProblem] = useState<string>("")
+  const [results, setResults] = useState<ResultsState>(null)
+  const [isProcessing, setIsProcessing] = useState<boolean>(false)
 
   const handleSolve = async () => {
     if (!problem.trim()) return
@@ -80,7 +94,7 @@ export default function LinearProgrammingApp() {
         reportText,
         parsedProblem,
       })
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("[v0] Error solving problem:", error)
       setResults({
         error: error instanceof Error ? error.message : "Error desconocido",
@@ -169,7 +183,7 @@ export default function LinearProgrammingApp() {
 
           <Card className="text-center border-slate-200">
             <CardContent className="p-6">
-              <BarChart3 className="h-12 w-12 text-blue-600 mx-auto mb-4" />
+              <BarChart3 className="h-12 w-12 mx-auto mb-4" />
               <h3 className="font-semibold text-slate-800 mb-2">Método Gráfico</h3>
               <p className="text-sm text-slate-600">Visualización gráfica de la región factible y punto óptimo</p>
             </CardContent>
@@ -177,7 +191,7 @@ export default function LinearProgrammingApp() {
 
           <Card className="text-center border-slate-200">
             <CardContent className="p-6">
-              <TrendingUp className="h-12 w-12 text-green-600 mx-auto mb-4" />
+              <TrendingUp className="h-12 w-12 mx-auto mb-4" />
               <h3 className="font-semibold text-slate-800 mb-2">Análisis de Sensibilidad</h3>
               <p className="text-sm text-slate-600">Análisis completo de cambios en coeficientes y restricciones</p>
             </CardContent>
